@@ -13,6 +13,6 @@ spring:
     use-hal-as-default-json-media-type: false
   data:
     mongodb:
-      uri: mongodb://localhost/parcom
+      uri: mongodb://pc-news-mongo/parcom
     rest:
       detection-strategy: annotated
