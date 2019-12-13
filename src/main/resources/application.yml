@@ -1,0 +1,18 @@
+server:
+  port : 8082
+  
+parcom:
+  services:
+    notification:
+      host: pc-notifier
+      port: 8083
+
+spring:           
+  application.name: pc-news
+  hateoas:
+    use-hal-as-default-json-media-type: false
+  data:
+    mongodb:
+      uri: mongodb://localhost/parcom
+    rest:
+      detection-strategy: annotated
