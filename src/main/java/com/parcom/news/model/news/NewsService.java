@@ -1,5 +1,6 @@
 package com.parcom.news.model.news;
 
+import com.parcom.exceptions.NotFoundParcomException;
 import com.parcom.news.services.notification.NotificationDto;
 import com.parcom.news.services.notification.NotificationService;
 import com.parcom.security_client.UserUtils;
@@ -28,7 +29,7 @@ public class NewsService {
     }
 
     private News getById(@NotNull Long idNews) {
-        return newsRepository.findById(idNews).orElseThrow(() -> new RuntimeException("Not found"));
+        return newsRepository.findById(idNews).orElseThrow(() -> new NotFoundParcomException("news.not.found"));
     }
 
 
