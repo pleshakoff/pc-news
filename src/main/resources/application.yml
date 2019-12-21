@@ -1,13 +1,20 @@
 server:
   port : 8082
-  
+  servlet:
+    context-path: /api/${parcom.api.version}
+
+
 parcom:
+  api:
+    version: v1
   services:
-    notification:
+    -
+      name: notifier
       host: pc-notifier
       port: 8083
+      version: v1
 
-spring:           
+spring:
   application.name: pc-news
   hateoas:
     use-hal-as-default-json-media-type: false
