@@ -4,6 +4,7 @@ package com.parcom.news.model.news;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Getter
 public class NewsResource {
@@ -18,7 +19,7 @@ public class NewsResource {
         this.id = news.getId();
         this.title = news.getTitle();
         this.message = news.getMessage();
-        this.author = news.getIdUser().toString();
+        this.author =  Optional.ofNullable(news.getIdUser()).map(Object::toString).orElse(null);
         this.dateTime = news.getDateTime();
     }
 }

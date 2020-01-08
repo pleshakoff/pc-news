@@ -1,16 +1,13 @@
 package com.parcom.news.model.news;
 
 import com.parcom.exceptions.NotFoundParcomException;
+import com.parcom.exceptions.ParcomException;
 import com.parcom.news.services.notification.NotificationDto;
 import com.parcom.news.services.notification.NotificationService;
 import com.parcom.security_client.UserUtils;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.event.EventListener;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 
-import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,7 +26,7 @@ public class NewsServiceImpl implements NewsService {
         return newsRepository.getNewsByIdGroup(UserUtils.getIdGroup()).stream().map(NewsResource::new).collect(Collectors.toList());
     }
 
-    private News getById(@NotNull Long idNews) {
+    private News getById(String idNews) {
         return newsRepository.findById(idNews).orElseThrow(() -> new NotFoundParcomException("news.not.found"));
     }
 
@@ -53,8 +50,11 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
-    public NewsResource update(Long id, NewsDto newsDto) {
+    public NewsResource update(String id, NewsDto newsDto) {
         News news = getById(id);
+        if (!news.getIdUser().equals(UserUtils.getIdUser())) {
+            throw new ParcomException("news.you_not_news_owner");
+        }
         news.setTitle(newsDto.getTitle());
         news.setMessage(newsDto.getMessage());
         return new NewsResource(newsRepository.save(
@@ -63,7 +63,11 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(String id) {
+        News news = getById(id);
+        if (!news.getIdUser().equals(UserUtils.getIdUser())) {
+            throw new ParcomException("news.you_not_news_owner");
+        }
         newsRepository.deleteById(id);
     }
 

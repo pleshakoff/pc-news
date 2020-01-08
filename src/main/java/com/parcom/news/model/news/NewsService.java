@@ -11,8 +11,8 @@ public interface NewsService {
     NewsResource create(NewsDto newsDto);
 
     @Secured({"ROLE_ADMIN", "ROLE_MEMBER"})
-    NewsResource update(Long id, NewsDto newsDto);
+    NewsResource update(String id, NewsDto newsDto);
 
     @Secured({"ROLE_ADMIN", "ROLE_MEMBER"})
-    void delete(Long id);
+    void delete(String id);
 }

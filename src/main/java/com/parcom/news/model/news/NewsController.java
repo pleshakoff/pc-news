@@ -13,7 +13,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping(value = "/news",produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
+@RequestMapping(value = "/news",produces = {MediaType.APPLICATION_JSON_VALUE})
 @Api(tags="News")
 @RequiredArgsConstructor
 public class NewsController {
@@ -41,7 +41,7 @@ public class NewsController {
 
     @PutMapping("/{id}")
     @ApiOperation(value = "Update news post")
-    public NewsResource update(@PathVariable Long id, @Valid @RequestBody NewsDto newsDto,
+    public NewsResource update(@PathVariable String id, @Valid @RequestBody NewsDto newsDto,
                                BindingResult bindingResult) throws BindException
     {
         if (bindingResult.hasErrors()) {
@@ -52,7 +52,7 @@ public class NewsController {
 
     @DeleteMapping("/{id}")
     @ApiOperation(value = "Delete news post")
-    public void delete(@PathVariable Long id)
+    public void delete(@PathVariable String id)
     {
         newsService.delete(id);
     }
