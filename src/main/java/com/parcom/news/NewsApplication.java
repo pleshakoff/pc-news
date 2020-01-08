@@ -16,7 +16,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 import java.util.Arrays;
 
 @SpringBootApplication
-@EnableSwagger2
 @EnableAsync
 public class NewsApplication {
 
@@ -27,23 +26,6 @@ public class NewsApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(NewsApplication.class, args);
 	}
-
-	@Bean
-	public Docket api() {
-		return new Docket(DocumentationType.SWAGGER_2).globalOperationParameters(
-				Arrays.asList(new ParameterBuilder()
-						.name("X-Auth-Token")
-						.description("userSecurityDto session token")
-						.modelRef(new ModelRef("string"))
-						.parameterType("header")
-						.required(false)
-						.build()))
-				.select()
-				.apis(RequestHandlerSelectors.withClassAnnotation(RestController.class))
-				.paths(PathSelectors.any())
-		    	.build();
-	}
-
 
 
 }
