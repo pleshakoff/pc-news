@@ -21,5 +21,3 @@ spring:
   data:
     mongodb:
       uri: mongodb://pc-news-mongo/parcom
-    rest:
-      detection-strategy: annotated
