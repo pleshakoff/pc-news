@@ -54,9 +54,6 @@ public class KafkaConfig {
         configProps.put(
                 ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG,
                 JsonSerializer.class);
-       configProps.put(
-                 JsonSerializer.ADD_TYPE_INFO_HEADERS,
-                "com.parcom.notifier.notification.NotificationInDto");
 
 
         return new DefaultKafkaProducerFactory<>(configProps);
