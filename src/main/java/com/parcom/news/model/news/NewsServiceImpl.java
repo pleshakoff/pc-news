@@ -2,7 +2,6 @@ package com.parcom.news.model.news;
 
 import com.parcom.exceptions.NotFoundParcomException;
 import com.parcom.exceptions.ParcomException;
-import com.parcom.news.services.notification.NotificationDto;
 import com.parcom.news.services.notification.NotificationService;
 import com.parcom.security_client.UserUtils;
 import lombok.RequiredArgsConstructor;
@@ -11,8 +10,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static com.parcom.news.services.notification.NotificationType.NEWS;
 
 @Service
 @RequiredArgsConstructor

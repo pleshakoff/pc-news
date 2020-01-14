@@ -1,7 +1,7 @@
 package com.parcom.news.services.notification;
 
 
-import com.parcom.network.Network;
+import com.parcom.asyncdto.NotificationDto;
 import com.parcom.news.model.news.News;
 import com.parcom.security_client.UserUtils;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +12,6 @@ import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.kafka.support.SendResult;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.util.concurrent.ListenableFuture;
 import org.springframework.util.concurrent.ListenableFutureCallback;
@@ -25,7 +24,7 @@ import static com.parcom.news.services.notification.NotificationType.NEWS;
 @Slf4j
 public class NotificationServiceImpl implements NotificationService {
 
-    private final KafkaTemplate<String,NotificationDto> notificationDtoKafkaTemplate;
+    private final KafkaTemplate<String, NotificationDto> notificationDtoKafkaTemplate;
 
     @Value("${parcom.kafka.topic.notification}")
     private String notificationTopic;

@@ -1,5 +1,7 @@
-package com.parcom.news.services.notification;
+package com.parcom.asyncdto;
 
+import com.parcom.news.services.notification.NotificationReceiverType;
+import com.parcom.news.services.notification.NotificationType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
