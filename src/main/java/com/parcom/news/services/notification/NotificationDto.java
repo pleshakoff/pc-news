@@ -16,6 +16,9 @@ public class NotificationDto {
     private  final NotificationType notificationType;
 
     @NotNull
+    private  final NotificationReceiverType notificationReceiverType;
+
+    @NotNull
     private final String  title;
 
     private final String  message;

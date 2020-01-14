@@ -5,6 +5,10 @@ server:
 
 
 parcom:
+  kafka:
+    bootstrap-address: pc-kafka:9092
+    topic:
+      notification: notification
   api:
     version: v1
   services:

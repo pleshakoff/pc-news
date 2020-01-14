@@ -2,51 +2,57 @@ package com.parcom.news.services.notification;
 
 
 import com.parcom.network.Network;
+import com.parcom.news.model.news.News;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.kafka.support.SendResult;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.util.concurrent.ListenableFuture;
+import org.springframework.util.concurrent.ListenableFutureCallback;
+
+import static com.parcom.news.services.notification.NotificationReceiverType.GROUP;
+import static com.parcom.news.services.notification.NotificationType.NEWS;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class NotificationServiceImpl implements NotificationService {
 
-    private static final String GROUP = "group";
-    private static final String USER = "user";
-    private static final String CUSTOM = "custom";
+    private final KafkaTemplate<String,NotificationDto> notificationDtoKafkaTemplate;
 
-    private final Network network;
+    @Value("${parcom.kafka.topic.notification}")
+    private String notificationTopic;
+
+
+
+    private void sendToKafka(NotificationDto notificationDto) {
+
+        ListenableFuture<SendResult<String, NotificationDto>> future =
+                notificationDtoKafkaTemplate.send(notificationTopic, notificationDto);
+
+        future.addCallback(new ListenableFutureCallback<SendResult<String, NotificationDto>>() {
+
+            @Override
+            public void onSuccess(SendResult<String, NotificationDto> result) {
+                log.info("Send notification news id {}",notificationDto.getIdObjectSender());
+            }
+
+            @Override
+            public void onFailure(Throwable ex) {
+               log.error(String.format("Send notification failure id %s",notificationDto.getIdObjectSender()),ex);
+            }
+        });
+    }
+
 
 
 
     @Override
-    public void sendGroup(NotificationDto notificationDto) {
-        send(notificationDto, GROUP);
+    public void send(News news) {
+        NotificationDto notificationDto = new NotificationDto(NEWS, GROUP, news.getTitle(), news.getMessage(), news.getId(), news.getIdUser());
+        sendToKafka(notificationDto);
     }
-
-    @Override
-    public void sendUser(NotificationDto notificationDto) {
-        send(notificationDto, USER);
-    }
-
-    @Override
-    public void sendCustom(NotificationDto notificationDto) {
-        send(notificationDto, CUSTOM);
-    }
-
-
-
-    private void send(NotificationDto notificationDto, String path)
-    {
-        log.info("Send notification");
-        network.callPost("notifier",String.class,notificationDto,"send",path);
-
-    }
-
-
-
-
-
-
 }

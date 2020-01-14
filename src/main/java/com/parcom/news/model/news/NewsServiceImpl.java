@@ -42,10 +42,7 @@ public class NewsServiceImpl implements NewsService {
                         idUser(UserUtils.getIdUser()).
                         build()
         );
-        notificationService.sendGroup(
-                new NotificationDto(NEWS,news.getTitle(),news.getMessage(),news.getId(),news.getIdUser())
-        );
-
+        notificationService.send(news);
         return new NewsResource(news);
     }
 
