@@ -11,12 +11,6 @@ parcom:
       notification: notification
   api:
     version: v1
-  services:
-    -
-      name: notifier
-      host: pc-notifier
-      port: 8083
-      version: v1
 
 spring:
   application.name: pc-news
