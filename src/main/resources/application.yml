@@ -19,3 +19,10 @@ spring:
   data:
     mongodb:
       uri: mongodb://pc-news-mongo/parcom
+management:
+  endpoints:
+    metrics:
+      enabled: true
+    web:
+      exposure:
+        include: "health,prometheus"
